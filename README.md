@@ -1,12 +1,19 @@
-Chrono
-======
-A natural language date parser in Javascript, designed for extracting date information from any given text. (Java version is also available [here](https://github.com/wanasit/chrono-java))
+# Chrono 中文強化版
 
-[![Build Status](https://travis-ci.org/wanasit/chrono.svg?branch=master)](https://travis-ci.org/wanasit/chrono)
-[![Coverage Status](https://img.shields.io/coveralls/wanasit/chrono.svg)](https://coveralls.io/r/wanasit/chrono?branch=master)
+[![Build Status](https://travis-ci.org/weather-bot/chrono.svg?branch=master)](https://travis-ci.org/weather-bot/chrono)
+
+Fork 自 Chrono Node，並加強中文語句的處理部分，為氣象機器人使用的時間自然語言模組。
+
+This is forked from Chrono Node, and enhances Chinese NLP. Use by Weather Bot TW.
+
+A natural language date parser in Javascript, designed for extracting date information from any given text.
 
 Chrono supports most date and time formats, such as :
 
+* 這禮拜六
+* 昨天晚上
+* 今天 14:00
+* 五天後
 * Today, Tomorrow, Yesterday, Last Friday, etc
 * 17 August 2013 - 19 August 2013
 * This Friday from 13:00 - 16.00
@@ -278,5 +285,3 @@ npm run karma
 # Start watch (run on a different terminal)
 npm run watch
 ```
-
-
