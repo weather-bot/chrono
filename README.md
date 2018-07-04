@@ -29,7 +29,7 @@ Chrono supports most date and time formats, such as :
 Just run:
 
     $ npm i --save chrono-node
-    
+
 And start using chrono:
 
     var chrono = require('chrono-node')
@@ -49,9 +49,8 @@ And use:
     <script src="bower_components/chrono/chrono.min.js"></script>
     <script>chrono.parseDate('An appointment on Sep 12-13')</script>
 ```
-    
 
-#### Other Options:
+#### Other Options
 
 Doing something else? No worries. Try these:
 
@@ -75,14 +74,14 @@ browserify src/chrono.js --s chrono -o chrono.js
 
 ## Usage
 
-Simply pass a string to function `chrono.parseDate` or `chrono.parse`. 
+Simply pass a string to function `chrono.parseDate` or `chrono.parse`.
 
 ```javascript
 > var chrono = require('chrono-node')
 
-> chrono.parseDate('An appointment on Sep 12-13') 
+> chrono.parseDate('An appointment on Sep 12-13')
 Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
-    
+
 > chrono.parse('An appointment on Sep 12-13');
 [ { index: 18,
     text: 'Sep 12-13',
@@ -99,7 +98,7 @@ Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
 
 Today's "Friday" is different from last month's "Friday". 
 The meaning of the referenced dates depends on when they are mentioned. 
-Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.    
+Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.
 
 ```javascript
 
@@ -130,7 +129,7 @@ results[0].end.date()    // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 * `start` The parsed date components as a [ParsedComponents](#parsedcomponents) object
 * `end`   Similar to `start` but can be null.
 * `index` The location within the input text of this result  
-* `text`  The text this result that appears in the input 
+* `text`  The text this result that appears in the input
 * `ref`   The [reference date](#reference-date) of this result
 
 #### ParsedComponents
@@ -152,9 +151,9 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
 ```
 
-### Strict vs Casual 
+### Strict vs Casual
 
-Chrono comes with `strict` mode that parse only formal date patterns. 
+Chrono comes with `strict` mode that parse only formal date patterns.
 
 ```javascript
 // 'strict' mode
@@ -186,16 +185,16 @@ var christmasParser = new chrono.Parser();
 christmasParser.pattern = function () { return /Christmas/i } 
 
 // This function will be called when matched pattern is found
-christmasParser.extract = function(text, ref, match, opt) { 
-    
+christmasParser.extract = function(text, ref, match, opt) {
+
     // Return a parsed result, that is 25 December
     return new chrono.ParsedResult({
         ref: ref,
         text: match[0],
         index: match.index,
-        start: {    
-            day: 25, 
-            month: 12, 
+        start: {
+            day: 25,
+            month: 12,
         }
     });
 }
@@ -206,13 +205,14 @@ christmasParser.extract = function(text, ref, match, opt) {
 var custom = new chrono.Chrono();
 custom.parsers.push(christmasParser);
 
-custom.parseDate("I'll arrive at 2.30AM on Christmas night") 
+custom.parseDate("I'll arrive at 2.30AM on Christmas night")
 // Wed Dec 25 2013 02:30:00 GMT+0900 (JST)
 
 ```
 
-To create a custom parser, override `pattern` and `extract` methods on an object of class `chrono.Parser`. 
-* The `pattern` method must return `RegExp` object of searching pattern. 
+To create a custom parser, override `pattern` and `extract` methods on an object of class `chrono.Parser`.
+
+* The `pattern` method must return `RegExp` object of searching pattern.
 * The `extract` method will be called with the 
 [match](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) object when the pattern is found. This function must create and return a [result](#parsedresult) (or null to skip).
 
@@ -228,7 +228,7 @@ guessPMRefiner.refine = function(text, results, opt) {
     results.forEach(function (result) {
         if (!result.start.isCertain('meridiem') 
             &&  result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
-            
+
             result.start.assign('meridiem', 1);
             result.start.assign('hour', result.start.get('hour') + 12);
         }
@@ -268,7 +268,7 @@ npm install
 npm run test
 ```
 
-Chrono's source files is in `src` directory. The built bundle (`chrono.js` and `chrono.min.js`) can be built by [Browserify](http://browserify.org) on `src/chrono.js` using the following command 
+Chrono's source files is in `src` directory. The built bundle (`chrono.js` and `chrono.min.js`) can be built by [Browserify](http://browserify.org) on `src/chrono.js` using the following command
 
 ```
 npm run make
