@@ -56,7 +56,7 @@ exports.commonPostProcessing = function() {
 exports.strictOption = function () {
     var strictConfig = {
         strict: true
-    }
+    };
 
     return exports.mergeOptions([
         exports.en(strictConfig),
@@ -149,7 +149,7 @@ exports.en.casual = function(config) {
     config.strict = false;
     var option = exports.en(config);
 
-    // EN
+    // en
     option.parsers.unshift(new parser.ENCasualDateParser());
     option.parsers.unshift(new parser.ENCasualTimeParser());
     option.parsers.unshift(new parser.ENWeekdayParser());

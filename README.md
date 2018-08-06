@@ -1,19 +1,20 @@
 # Chrono 中文強化版
 
+<!-- Weather Bot -->
 [![Build Status](https://travis-ci.org/weather-bot/chrono.svg?branch=master)](https://travis-ci.org/weather-bot/chrono)
+Fork 自 Chrono Node，並加強中文語句的處理部分，為氣象機器人使用的 Javascript 時間自然語言模組。
 
-Fork 自 Chrono Node，並加強中文語句的處理部分，為氣象機器人使用的時間自然語言模組。
-
-This is forked from Chrono Node, and enhances Chinese NLP. Use by Weather Bot TW.
+This is forked from Chrono Node, and enhances Chinese NLP. Used by Weather Bot TW.
+<!-- End Weather Bot-->
 
 A natural language date parser in Javascript, designed for extracting date information from any given text.
 
 Chrono supports most date and time formats, such as :
 
-* 這禮拜六
+* 這禮拜六 <!-- Weather Bot -->
 * 昨天晚上
 * 今天 14:00
-* 五天後
+* 五天後 <!-- End Weather Bot-->
 * Today, Tomorrow, Yesterday, Last Friday, etc
 * 17 August 2013 - 19 August 2013
 * This Friday from 13:00 - 16.00
@@ -24,30 +25,42 @@ Chrono supports most date and time formats, such as :
 
 ## Install
 
-#### npm (recommended)
+<!-- Weather Bot -->
+
+### npm (MAINTAIN BY WEATHER BOT)
 
 Just run:
 
-    $ npm i --save chrono-node
+```bash
+npm i weather-bot/chrono
+```
+
+<!-- End Weather Bot-->
 
 And start using chrono:
 
-    var chrono = require('chrono-node')
-    chrono.parseDate('An appointment on Sep 12-13') 
+```js
+var chrono = require('chrono-node');
+chrono.parseDate('An appointment on Sep 12-13'); 
+```
 
-#### Bower
+<!-- Weather Bot -->
+
+### Bower (NOT MANTAIN BY WEATHER BOT)
+
+<!-- End Weather Bot -->
 
 Prefer bower? You can do that, too:
 
 Just run:
-
-    $ bower install chrono
-  
+```bash
+$ bower install chrono
+```
 And use:
    
 ```html
-    <script src="bower_components/chrono/chrono.min.js"></script>
-    <script>chrono.parseDate('An appointment on Sep 12-13')</script>
+<script src="bower_components/chrono/chrono.min.js"></script>
+<script>chrono.parseDate('An appointment on Sep 12-13')</script>
 ```
 
 #### Other Options
@@ -68,30 +81,30 @@ Swift    | Try using the community-made [chrono-swift] wrapper.
 
 Chrono's modules are linked and packaged using [Browserify](http://browserify.org) on `src/chrono.js`. By default, `chrono.js` file exports `chrono` object as a window global.
 
-```
-browserify src/chrono.js --s chrono -o chrono.js
+```bash
+$ browserify src/chrono.js --s chrono -o chrono.js
 ```
 
 ## Usage
 
 Simply pass a string to function `chrono.parseDate` or `chrono.parse`.
 
-```javascript
-> var chrono = require('chrono-node')
+```js
+var chrono = require('chrono-node');
 
-> chrono.parseDate('An appointment on Sep 12-13')
-Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
+chrono.parseDate('An appointment on Sep 12-13');
+// Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
 
-> chrono.parse('An appointment on Sep 12-13');
-[ { index: 18,
+chrono.parse('An appointment on Sep 12-13');
+/* [ { index: 18,
     text: 'Sep 12-13',
     tags: { ENMonthNameMiddleEndianParser: true },
-    start: 
+    start:
      { knownValues: [Object],
        impliedValues: [Object] },
-    end: 
+    end:
      { knownValues: [Object],
-       impliedValues: [Object] } } ]
+       impliedValues: [Object] } } ] */
 ```
 
 ### Reference Date
@@ -100,28 +113,52 @@ Today's "Friday" is different from last month's "Friday".
 The meaning of the referenced dates depends on when they are mentioned. 
 Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.
 
-```javascript
+```js
+chrono.parseDate('Friday', new Date(2012, 7, 23)); 
+// Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
 
-> chrono.parseDate('Friday', new Date(2012,7,23)); 
-Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
+chrono.parseDate('Friday', new Date(2012, 7, 1)); 
+// Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
+```
 
-> chrono.parseDate('Friday', new Date(2012,7,1)); 
-Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
+### Parsing Options
+
+* `forwardDate` (boolean) to assume the results should happen after the reference date (forward into the future)
+
+```js
+var referenceDate = new Date(2012, 7, 25);
+// Sat Aug 25 2012 00:00:00 GMT+0900 -- The reference date was Saturday
+
+chrono.parseDate('Friday', referenceDate);
+// Fri Aug 24 2012 12:00:00 GMT+0900 (JST) -- The day before was Friday
+
+chrono.parseDate('Friday', referenceDate, { forwardDate: true });
+// Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday
+```
+
+* `timezones` (Map) to override Chrono's default timezone abbriviation mapping. The value should be the timezone offset in minutes (between -720 to 720).
+
+```js
+chrono.parse('Friday at 2 pm IST', refDate, { 'IST': 330 })[0].start.get('timezoneOffset');
+// 330 (IST – India Standard Time +0530)
+
+chrono.parse('Friday at 2 pm IST', refDate, { 'IST': 60 })[0].start.get('timezoneOffset');
+// 60 (IST - Irish Standard Time +0100)
 ```
 
 ### Detailed Parsed Results
 
 The function `chrono.parse` returns detailed parsing results as objects of class `chrono.ParsedResult`. 
 
-```javascript
-var results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM')
+```js
+var results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM');
 
-results[0].index  // 15
-results[0].text   // 'tomorrow from 10 to 11 AM'
-results[0].ref    // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
+results[0].index;  // 15
+results[0].text;   // 'tomorrow from 10 to 11 AM'
+results[0].ref;    // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
 
-results[0].start.date()  // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
-results[0].end.date()    // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
+results[0].start.date();  // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
+results[0].end.date();    // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 ```
 
 #### ParsedResult
@@ -142,20 +179,20 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 * `isCertain(component)`      return true if the value of the component is known.
 * `date()`                    Create a javascript Date
 
-```javascript
+```js
 // Remove the timezone offset of a parsed date and then create the Date object
-> var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult Object
-> results[0].start.assign('timezoneOffset', 0); // Change value in ParsedComponents Object 'start'
-> var d = results[0].start.date(); // Create a Date object
-> d.toString(); // Display resulting Date object
-'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
+var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult Object
+results[0].start.assign('timezoneOffset', 0); // Change value in ParsedComponents Object 'start'
+
+var d = results[0].start.date(); // Create a Date object
+d.toString(); // 'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
 ```
 
 ### Strict vs Casual
 
 Chrono comes with `strict` mode that parse only formal date patterns.
 
-```javascript
+```js
 // 'strict' mode
 chrono.strict.parseDate('Today');       // null
 chrono.strict.parseDate('Friday');      // null
@@ -169,6 +206,23 @@ chrono.casual.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
 chrono.casual.parseDate('Friday');      // Fri Jul 01 2016 12:00:00 ...
 ```
 
+### Choosing Locale
+
+By default, Chrono is configurated to parse different date formats from muliple languages out-off-box. However, by using predefined locale options, you can increase parsing accuracy.
+
+Handling different date format for UK / US is a good example.
+
+```js
+// default English (US)
+chrono.parseDate('6/10/2018');    // Sun Jun 10 2018 12:00:00 ...
+chrono.en.parseDate('6/10/2018'); // Sun Jun 10 2018 12:00:00 ...
+
+// UK English or German
+chrono.en_GB.parseDate('6/10/2018'); // Sat Oct 06 2018 12:00:00 ...
+chrono.de.parseDate('6/10/2018');    // Sat Oct 06 2018 12:00:00 ...
+```
+
+Current supported locale options are: `en`, `en_GB`, `de`, `es`, `fr`, `ja`
 
 ## Customize Chrono
 
@@ -178,11 +232,11 @@ Chrono’s extraction pipeline are mainly separated into 'parse' and ‘refine�
 
 Parser is a module for low-level pattern-based parsing. Ideally, each parser should be designed to handle a single specific date format. User can add new type of parsers for supporting new date formats or languages.
 
-```javascript
+```js
 var christmasParser = new chrono.Parser();
 
 // Provide search pattern
-christmasParser.pattern = function () { return /Christmas/i } 
+christmasParser.pattern = function () { return /Christmas/i; };
 
 // This function will be called when matched pattern is found
 christmasParser.extract = function(text, ref, match, opt) {
@@ -197,7 +251,7 @@ christmasParser.extract = function(text, ref, match, opt) {
             month: 12,
         }
     });
-}
+};
 
 // Create a new custom Chrono. The initial pipeline 'option' can also be specified as 
 // - new chrono.Chrono(exports.options.strictOption())
@@ -205,7 +259,7 @@ christmasParser.extract = function(text, ref, match, opt) {
 var custom = new chrono.Chrono();
 custom.parsers.push(christmasParser);
 
-custom.parseDate("I'll arrive at 2.30AM on Christmas night")
+custom.parseDate("I'll arrive at 2.30AM on Christmas night");
 // Wed Dec 25 2013 02:30:00 GMT+0900 (JST)
 
 ```
@@ -220,21 +274,21 @@ To create a custom parser, override `pattern` and `extract` methods on an object
 
 Refiner is a higher level module for improving or manipulating the results. User can add a new type of refiner to customize Chrono's results or to add some custom logic to Chrono.
 
-```javascript
+```js
 var guessPMRefiner = new chrono.Refiner();
 guessPMRefiner.refine = function(text, results, opt) {
     // If there is no AM/PM (meridiem) specified, 
     //  let all time between 1:00 - 4:00 be PM (13.00 - 16.00)
     results.forEach(function (result) {
-        if (!result.start.isCertain('meridiem') 
-            &&  result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
+        if (!result.start.isCertain('meridiem') &&
+            result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
 
             result.start.assign('meridiem', 1);
             result.start.assign('hour', result.start.get('hour') + 12);
         }
     });
     return results;
-} 
+};
 
 // Create a new custom Chrono. The initial pipeline 'option' can also be specified as 
 // - new chrono.Chrono(exports.options.strictOption())
@@ -260,28 +314,27 @@ This guide explains how to setup chrono project for prospective contributors.
 
 ```bash
 # Clone and install library
-git clone https://github.com/wanasit/chrono.git chrono
-cd chrono
-npm install
+$ git clone https://github.com/wanasit/chrono.git chrono
+$ cd chrono
+$ npm install
 
-# Try running the test
-npm run test
-```
-
-Chrono's source files is in `src` directory. The built bundle (`chrono.js` and `chrono.min.js`) can be built by [Browserify](http://browserify.org) on `src/chrono.js` using the following command
-
-```
-npm run make
 ```
 
 Parsing date from text is complicated. Sometimes, a small change can have effects on unexpected places. So, Chrono is a heavily tested library. Commits that break a test shouldn't be allowed in any condition.
 
-Chrono's unit testing is based-on [Qunit](https://qunitjs.com/) and [Karma](https://github.com/karma-runner/karma). During the developement, I recommend running Karma test together with watchify.
+Chrono's unit testing is based-on [Jest](https://facebook.github.io/jest/).
 
-```
-# Start karma
-npm run karma
+```bash
+# Run the test
+$ npm run test
 
-# Start watch (run on a different terminal)
-npm run watch
+# Run the test in watch mode
+$ npm run watch
 ```
+
+Chrono's source files is in `src` directory. The built bundle (`chrono.js` and `chrono.min.js`) can be built by [Browserify](http://browserify.org) on `src/chrono.js` using the following command
+
+```bash
+$ npm run make
+```
+
