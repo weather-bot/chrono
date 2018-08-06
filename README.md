@@ -2,18 +2,20 @@
 
 <!-- Weather Bot -->
 [![Build Status](https://travis-ci.org/weather-bot/chrono.svg?branch=master)](https://travis-ci.org/weather-bot/chrono)
-Fork 自 Chrono Node，並加強中文語句的處理部分，為氣象機器人使用的 Javascript 時間自然語言模組。
 
-This is forked from Chrono Node, and enhances Chinese NLP. Used by Weather Bot TW.
+Fork 自 Chrono Node，並加強中文語句的處理部分，為氣象機器人使用的 Javascript 時間自然語言模組。This is forked from Chrono Node, and enhances Chinese NLP. Used by Weather Bot TW.
 <!-- End Weather Bot-->
 
 A natural language date parser in Javascript, designed for extracting date information from any given text.
 
-Chrono supports most date and time formats, such as :
+<!-- Weather Bot -->
 
-* 這禮拜六 <!-- Weather Bot -->
+支援語法 Support：
+
+* 這禮拜六
 * 昨天晚上
 * 今天 14:00
+* 今天晚上到後天凌晨
 * 五天後 <!-- End Weather Bot-->
 * Today, Tomorrow, Yesterday, Last Friday, etc
 * 17 August 2013 - 19 August 2013
@@ -27,7 +29,7 @@ Chrono supports most date and time formats, such as :
 
 <!-- Weather Bot -->
 
-### npm (MAINTAIN BY WEATHER BOT)
+### NPM (Maintain by us. 本專案維護)
 
 Just run:
 
@@ -46,7 +48,7 @@ chrono.parseDate('An appointment on Sep 12-13');
 
 <!-- Weather Bot -->
 
-### Bower (NOT MANTAIN BY WEATHER BOT)
+### Bower (NOT maintain by us 本專案不支援)
 
 <!-- End Weather Bot -->
 
@@ -307,18 +309,20 @@ custom.parseDate("This is at 2.30 AM");
 
 In the example, a custom refiner is created for assigning PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). The method must return an array of the new results (which, in this case, we modified those results in place).
 
-
-## Development Guides
+## Development Guides 開發指南
 
 This guide explains how to setup chrono project for prospective contributors.
 
+<!-- Weather Bot -->
+
 ```bash
 # Clone and install library
-$ git clone https://github.com/wanasit/chrono.git chrono
+$ git clone https://github.com/weather-bot/chrono.git
 $ cd chrono
 $ npm install
-
 ```
+
+<!-- End Weather Bot -->
 
 Parsing date from text is complicated. Sometimes, a small change can have effects on unexpected places. So, Chrono is a heavily tested library. Commits that break a test shouldn't be allowed in any condition.
 
