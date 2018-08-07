@@ -34,7 +34,7 @@ A natural language date parser in Javascript, designed for extracting date infor
 Just run:
 
 ```bash
-npm i weather-bot/chrono
+npm i chrono-node-zh
 ```
 
 <!-- End Weather Bot-->
@@ -42,7 +42,7 @@ npm i weather-bot/chrono
 And start using chrono:
 
 ```js
-var chrono = require('chrono-node');
+var chrono = require('chrono-node-zh');
 chrono.parseDate('An appointment on Sep 12-13'); 
 ```
 
@@ -92,7 +92,7 @@ $ browserify src/chrono.js --s chrono -o chrono.js
 Simply pass a string to function `chrono.parseDate` or `chrono.parse`.
 
 ```js
-var chrono = require('chrono-node');
+var chrono = require('chrono-node-zh');
 
 chrono.parseDate('An appointment on Sep 12-13');
 // Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
